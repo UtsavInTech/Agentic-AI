@@ -1,0 +1,205 @@
+﻿School of Computing Sciences &Engineering
+
+
+Department Of Computer Science & Engineering
+
+
+  
+
+
+
+Design And Analysis Of Algorithms Lab
+(CSP472)
+
+
+Lab File (2025-26)
+For
+B.Tech. (CSE) 6th Semester
+
+
+Submitted To:                                                         Submitted By:
+Mr. Ayush Singh                                                             Utsav Kumar
+                                                                                        B.Tech. CSE 6th Semester
+Department of Computer Science & Engineering         2023430537 CSF G1 
+School Of Computing Sciences & Engineering
+Working of the Image Captioning Code using BLIP Model
+1. Introduction
+This notebook demonstrates the fine-tuning of the BLIP (Bootstrapping Language-Image Pretraining) model for the task of image captioning.
+Image captioning is a multimodal task that combines computer vision and natural language processing (NLP) to generate descriptive textual captions for images.
+The BLIP model uses:
+* A Vision Transformer (ViT) for image understanding
+
+* A Transformer-based language model for caption generation
+2. Importing Required Libraries
+The code begins by importing essential Python libraries:
+Purpose
+   * Handle deep learning operations
+   * Load pretrained models
+   * Process images and text
+   * Train and fine-tune the model
+
+Key Libraries Used
+      * torch – for tensor operations and training
+      * transformers – to load BLIP model and processor
+      * datasets – to load image-caption datasets
+      * PIL – for image handling
+      * tqdm – to visualize training progress
+
+________________
+
+
+3. Loading the Dataset
+The dataset contains:
+         * Images
+         * Corresponding captions
+Each data sample consists of:
+(Image → Caption)
+Working
+         * Images are loaded from disk or dataset source
+         * Captions are read as text labels
+         * Dataset is split into training and validation sets
+This dataset is used to teach the model how visual features map to natural language.
+4. Loading the Pretrained BLIP Model
+A pretrained BLIP model is loaded using the Hugging Face Transformers library.
+Purpose
+         * Avoid training from scratch
+         * Leverage knowledge learned from large-scale image–text data
+Components Loaded
+         * BLIP Processor
+
+            * Converts images into pixel tensors
+            * Tokenizes captions into text tokens
+
+               * BLIP Model
+
+                  * Image encoder (Vision Transformer)
+                  * Text decoder (Language model)
+
+________________
+
+
+5. Data Preprocessing
+Before training, both images and captions must be converted into a format the model understands.
+Image Processing
+                     * Images are resized
+                     * Converted into pixel tensors
+                     * Normalized
+Text Processing
+                     * Captions are tokenized
+                     * Padding and truncation are applied
+                     * Converted into token IDs
+This step ensures image and text inputs are aligned correctly.
+________________
+
+
+6. Forward Pass (Model Execution)
+For each batch:
+                     1. Images are passed to the vision encoder
+                     2. Encoded image features are passed to the text decoder
+                     3. The decoder predicts the next word token-by-token
+Output
+                     * Predicted caption tokens
+                     * Training loss (cross-entropy loss)
+
+The loss measures the difference between:
+                        * Generated caption
+                        * Ground-truth caption
+
+________________
+
+
+7. Loss Calculation
+The training objective is to minimize caption generation loss.
+Loss Used
+                           * Cross-Entropy Loss
+This penalizes incorrect word predictions and rewards correct ones.
+Lower loss → better caption quality.
+________________
+
+
+8. Backpropagation and Optimization
+After computing the loss:
+                           1. Gradients are calculated using backpropagation
+
+                           2. Model weights are updated using an optimizer (usually AdamW)
+
+                           3. Learning rate scheduling controls training stability
+
+This step fine-tunes the BLIP model specifically for the given dataset.
+________________
+
+
+9. Training Loop
+The notebook uses a training loop that:
+                              * Iterates over epochs
+
+                              * Processes data batch-wise
+
+                              * Updates model parameters
+
+                              * Tracks loss over time
+
+Purpose
+                                 * Improve caption generation quality
+
+                                 * Adapt pretrained weights to the target dataset
+
+________________
+
+
+10. Model Evaluation
+After training:
+                                    * The model is tested on validation images
+
+                                    * Captions are generated automatically
+
+                                    * Generated captions are compared with actual captions
+
+This helps assess:
+                                       * Caption relevance
+
+                                       * Sentence fluency
+
+                                       * Visual correctness
+
+________________
+
+
+11. Caption Generation (Inference)
+Once trained, the model can generate captions for new unseen images.
+Working
+                                          1. Image is passed to the processor
+
+                                          2. Model encodes visual features
+
+                                          3. Decoder generates a caption word-by-word
+
+                                          4. Output text is displayed as final caption
+
+________________
+
+
+12. Applications
+This model can be used in:
+                                             * Assistive technology for visually impaired users
+
+                                             * Automated image tagging
+
+                                             * Content moderation
+
+                                             * Social media image description
+
+                                             * AI-based photo organization
+
+________________
+
+
+13. Conclusion
+The notebook successfully demonstrates:
+                                                * Multimodal learning using BLIP
+
+                                                * Fine-tuning of a pretrained vision-language model
+
+                                                * Automatic image caption generation
+
+By combining deep learning, computer vision, and NLP, the BLIP model produces accurate and meaningful captions from images.
