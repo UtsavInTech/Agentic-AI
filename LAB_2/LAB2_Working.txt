@@ -1,0 +1,280 @@
+﻿School of Computing Sciences &Engineering
+
+
+Department Of Computer Science & Engineering
+
+
+  
+
+
+
+Design And Analysis Of Algorithms Lab
+(CSP472)
+
+
+Lab File (2025-26)
+For
+B.Tech. (CSE) 6th Semester
+
+
+Submitted To:                                                         Submitted By:
+Mr. Ayush Singh                                                             Utsav Kumar
+                                                                                        B.Tech. CSE 6th Semester
+Department of Computer Science & Engineering         2023430537 CSF G1 
+School Of Computing Sciences & Engineering
+Working of the Text Splitting Code (5 Levels of Text Splitting)
+1. Introduction
+The purpose of this notebook is to demonstrate text splitting techniques used in Natural Language Processing (NLP) and LLM-based applications such as:
+* Document Question Answering
+
+* Retrieval Augmented Generation (RAG)
+
+* Semantic Search
+
+* Chatbots on PDFs / documents
+
+Large Language Models cannot process very large documents at once due to token limits.
+Therefore, text splitting is used to divide large text into smaller, meaningful chunks.
+________________
+
+
+2. Why Text Splitting is Required
+Text splitting helps to:
+   * Reduce token overflow
+
+   * Preserve semantic meaning
+
+   * Improve retrieval accuracy
+
+   * Enable efficient embeddings and vector search
+
+Without proper splitting:
+      * Context is lost
+
+      * Answers become inaccurate
+
+      * LLM responses degrade
+
+________________
+
+
+3. Libraries Used
+The notebook typically uses:
+         * langchain – for text splitters
+
+         * re – for regex-based splitting
+
+         * os – for file handling
+
+         * PyPDFLoader / TextLoader – for loading documents
+
+         * RecursiveCharacterTextSplitter – for intelligent chunking
+
+These libraries help in handling unstructured text efficiently.
+________________
+
+
+4. Input Data
+The input can be:
+            * Plain text files (.txt)
+
+            * PDF documents
+
+            * Web content
+
+            * Multi-modal text (text extracted from images or PDFs)
+
+The text is first loaded completely into memory before splitting.
+________________
+
+
+5. Level 1: Character-Based Text Splitting
+Working
+At this level, text is split purely based on fixed character length.
+Example:
+               * Chunk size = 500 characters
+
+               * Overlap = 50 characters
+
+How it works
+                  * The text is read sequentially
+
+                  * Every 500 characters form one chunk
+
+                  * Last 50 characters overlap with the next chunk
+
+Advantage
+                     * Simple and fast
+
+Disadvantage
+                        * May break sentences or paragraphs
+
+                        * Context loss can occur
+
+________________
+
+
+6. Level 2: Word-Based Text Splitting
+Working
+Text is split based on number of words instead of characters.
+How it works
+                           * Text is tokenized into words
+
+                           * Fixed number of words per chunk
+
+                           * Optional overlap between chunks
+
+Advantage
+                              * Better than character splitting
+
+                              * Preserves word boundaries
+
+Disadvantage
+                                 * Still may break sentences
+
+                                 * Does not understand semantics
+
+________________
+
+
+7. Level 3: Sentence-Based Text Splitting
+Working
+This method splits text using sentence boundaries.
+How it works
+                                    * Uses punctuation such as ., ?, !
+
+                                    * Each chunk contains complete sentences
+
+                                    * Chunk size is controlled by sentence count
+
+Advantage
+                                       * Maintains sentence integrity
+
+                                       * Improves readability
+
+Disadvantage
+                                          * Long sentences may exceed token limits
+
+                                          * Uneven chunk sizes
+
+________________
+
+
+8. Level 4: Recursive Text Splitting (Recommended)
+Working
+Recursive splitting is the most practical and intelligent approach.
+How it works
+The splitter tries to break text using this priority order:
+                                             1. Paragraphs (\n\n)
+
+                                             2. Sentences (.)
+
+                                             3. Words
+
+                                             4. Characters (last resort)
+
+If a chunk exceeds the size limit, it recursively applies the next level.
+Advantage
+                                                * Preserves semantic structure
+
+                                                * Produces balanced chunks
+
+                                                * Ideal for LLM pipelines
+
+Disadvantage
+                                                   * Slightly computationally expensive
+
+________________
+
+
+9. Level 5: Semantic / Multi-Modal Text Splitting
+Working
+This level focuses on meaning-aware splitting, often used with:
+                                                      * Embeddings
+
+                                                      * Images + text
+
+                                                      * Headings and sections
+
+How it works
+                                                         * Text is split based on logical sections
+
+                                                         * Headings, titles, and context are preserved
+
+                                                         * Can combine OCR text from images with document text
+
+Advantage
+                                                            * Best semantic preservation
+
+                                                            * High retrieval accuracy
+
+Disadvantage
+                                                               * Requires more processing
+
+                                                               * Often combined with vector databases
+
+________________
+
+
+10. Chunk Overlap Mechanism
+Purpose
+Chunk overlap ensures that:
+                                                                  * Important context is not lost
+
+                                                                  * Boundary information is preserved
+
+Example
+If overlap = 50 tokens:
+                                                                     * Last 50 tokens of previous chunk appear in next chunk
+
+This improves answer quality in RAG systems.
+________________
+
+
+11. Output of the Code
+The final output of the notebook is:
+                                                                        * A list of text chunks
+
+                                                                        * Each chunk has:
+
+                                                                           * Content
+
+                                                                           * Chunk index
+
+                                                                           * Metadata (source, page number, etc.)
+
+These chunks are later used for:
+                                                                              * Embedding generation
+
+                                                                              * Vector storage
+
+                                                                              * LLM querying
+
+________________
+
+
+12. Applications of Text Splitting
+Text splitting is widely used in:
+                                                                                 * Chatbots over PDFs
+
+                                                                                 * Legal document analysis
+
+                                                                                 * Academic research assistants
+
+                                                                                 * Enterprise search engines
+
+                                                                                 * AI tutors and note summarization
+
+________________
+
+
+13. Conclusion
+This notebook demonstrates five progressive levels of text splitting, starting from basic character splitting to advanced semantic-aware splitting.
+Proper text splitting:
+                                                                                    * Improves LLM performance
+
+                                                                                    * Preserves context
+
+                                                                                    * Enables scalable document intelligence
+
+It is a core preprocessing step in all modern LLM-based systems.
